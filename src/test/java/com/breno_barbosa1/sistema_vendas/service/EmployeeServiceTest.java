@@ -37,7 +37,7 @@ public class EmployeeServiceTest {
     private PasswordEncoder passwordEncoder;
 
     @Test
-    public void getEmployee_withValidId_ReturnsEmployee() {
+    public void getEmployee_withExistingId_ReturnsEmployee() {
         Employee employee = getValidEmployee();
         EmployeeDTO employeeDTO = getValidEmployeeDTO();
 
@@ -46,22 +46,23 @@ public class EmployeeServiceTest {
 
         EmployeeDTO sut = employeeService.findById(1L);
 
-        assertThat(sut).isNotNull();
-        assertThat(sut).isEqualTo(employeeDTO);
+        assertThat(sut)
+            .usingRecursiveComparison()
+            .isEqualTo(employeeDTO);
 
         verify(employeeRepository).findById(1L);
         verify(employeeMapper).employeeToEmployeeDTO(employee);
     }
 
     @Test
-    public void getEmployee_withInvalidId_ThrowsException() {
+    public void getEmployee_withNonExistingId_ThrowsException() {
         when(employeeRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> employeeService.findById(1L)).isInstanceOf(EmployeeNotFoundException.class);
     }
 
     @Test
-    public void getEmployee_withValidCpf_ReturnsEmployee() {
+    public void getEmployee_withExistingCpf_ReturnsEmployee() {
         Employee employee = getValidEmployee();
         EmployeeDTO employeeDTO = getValidEmployeeDTO();
         String cpf = employee.getCpf();
@@ -71,20 +72,19 @@ public class EmployeeServiceTest {
 
         EmployeeDTO sut = employeeService.findByCpf(cpf);
 
-        assertThat(sut).isNotNull();
-        assertThat(sut).isEqualTo(employeeDTO);
+        assertThat(sut)
+            .usingRecursiveComparison()
+            .isEqualTo(employeeDTO);
 
         verify(employeeRepository).findByCpf(cpf);
         verify(employeeMapper).employeeToEmployeeDTO(employee);
     }
 
     @Test
-    public void getEmployee_withInvalidCpf_ThrowsException() {
-        String cpf = getValidEmployee().getCpf();
+    public void getEmployee_withNonExistingCpf_ThrowsException() {
+        when(employeeRepository.findByCpf(any())).thenReturn(Optional.empty());
 
-        when(employeeRepository.findByCpf(cpf)).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> employeeService.findByCpf(cpf)).isInstanceOf(EmployeeNotFoundException.class);
+        assertThatThrownBy(() -> employeeService.findByCpf(any())).isInstanceOf(EmployeeNotFoundException.class);
     }
 
     @Test
@@ -102,7 +102,9 @@ public class EmployeeServiceTest {
         EmployeeDTO sut = employeeService.create(employeeDTO);
 
         assertThat(sut).isNotNull();
-        assertThat(sut).isEqualTo(employeeDTO);
+        assertThat(sut)
+            .usingRecursiveComparison()
+            .isEqualTo(employeeDTO);
 
         verify(employeeMapper).employeeDTOToEmployee(employeeDTO);
         verify(passwordEncoder).encode(password);
@@ -129,14 +131,16 @@ public class EmployeeServiceTest {
         EmployeeDTO sut = employeeService.update(updatedEmployeeDTO);
 
         assertThat(sut).isNotNull();
-        assertThat(sut).isEqualTo(employeeDTO);
+        assertThat(sut)
+            .usingRecursiveComparison()
+            .isEqualTo(employeeDTO);
 
         verify(employeeMapper).employeeToEmployeeDTO(any(Employee.class));
         verify(employeeRepository).save(any(Employee.class));
     }
 
     @Test
-    public void deleteEmployee_withValidId_ReturnsEmpty() {
+    public void deleteEmployee_withExistingId_ReturnsEmpty() {
         Employee employee = getValidEmployee();
         employee.setId(1L);
 
@@ -150,7 +154,7 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void deleteEmployee_withInvalidId_ThrowsException() {
+    public void deleteEmployee_withNonExistingId_ThrowsException() {
         when(employeeRepository.findById(1L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> employeeService.delete(1L))

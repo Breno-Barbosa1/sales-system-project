@@ -1,7 +1,10 @@
 package com.breno_barbosa1.sistema_vendas.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Objects;
 
@@ -12,11 +15,14 @@ public class SaleDTO implements Serializable {
 
     private Long id;
 
-    private Double totalAmount;
+    @NotNull
+    private BigDecimal totalAmount;
 
-    private Long employee_id;
+    @NotNull
+    private Long employeeId;
 
-    private List<SaleItemDTO> saleItemDTOS;
+    @NotNull
+    private List<SaleItemDTO> saleItems;
 
     public SaleDTO() {}
 
@@ -28,39 +34,39 @@ public class SaleDTO implements Serializable {
         this.id = id;
     }
 
-    public Double getTotalAmount() {
+    public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Double totalAmount) {
+    public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
 
-    public Long getEmployee_id() {
-        return employee_id;
+    public List<SaleItemDTO> getSaleItems() {
+        return saleItems;
     }
 
-    public void setEmployee_id(Long employee_id) {
-        this.employee_id = employee_id;
+    public void setSaleItems(List<SaleItemDTO> saleItems) {
+        this.saleItems = saleItems;
     }
 
-    public List<SaleItemDTO> getSaleItemDTOS() {
-        return saleItemDTOS;
+    public Long getEmployeeId() {
+        return employeeId;
     }
 
-    public void setSaleItemDTOS(List<SaleItemDTO> saleItemDTOS) {
-        this.saleItemDTOS = saleItemDTOS;
+    public void setEmployeeId(Long employeeId) {
+        this.employeeId = employeeId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         SaleDTO saleDTO = (SaleDTO) o;
-        return Objects.equals(getId(), saleDTO.getId()) && Objects.equals(getTotalAmount(), saleDTO.getTotalAmount()) && Objects.equals(getEmployee_id(), saleDTO.getEmployee_id()) && Objects.equals(getSaleItemDTOS(), saleDTO.getSaleItemDTOS());
+        return Objects.equals(getId(), saleDTO.getId()) && Objects.equals(getTotalAmount(), saleDTO.getTotalAmount()) && Objects.equals(getEmployeeId(), saleDTO.getEmployeeId()) && Objects.equals(getSaleItems(), saleDTO.getSaleItems());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getTotalAmount(), getEmployee_id(), getSaleItemDTOS());
+        return Objects.hash(getId(), getTotalAmount(), getEmployeeId(), getSaleItems());
     }
 }

@@ -31,16 +31,15 @@ public class EmployeeService {
 
     public List<EmployeeDTO> findAll() {
         List<Employee> employeeList = employeeRepository.findAll();
-        List<EmployeeDTO> employeeDTOList = new ArrayList<>();
 
         if(!employeeList.isEmpty()) {
-            for (Employee employee : employeeList) {
-                var dto = employeeMapper.employeeToEmployeeDTO(employee);
-                employeeDTOList.add(dto);
-            }
+            return employeeList
+                .stream()
+                .map(employeeMapper::employeeToEmployeeDTO)
+                .toList();
         }
 
-        return employeeDTOList;
+        return List.of();
     }
 
     public EmployeeDTO findById(Long id) {

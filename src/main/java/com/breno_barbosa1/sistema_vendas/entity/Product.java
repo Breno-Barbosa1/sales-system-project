@@ -1,9 +1,12 @@
 package com.breno_barbosa1.sistema_vendas.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -17,19 +20,30 @@ public class Product implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
+    @NotBlank
     @Column(name = "product_name", length = 100, nullable = false, unique = true)
     private String productName;
 
+    @NotNull
     @Column(name = "selling_price", nullable = false)
-    private Double sellingPrice;
+    private BigDecimal sellingPrice;
 
+    @NotNull
     @Column(name = "price_at_purchase", nullable = false)
-    private Double priceAtPurchase;
+    private BigDecimal priceAtPurchase;
 
+    @NotNull
     @Column(name = "stock_quantity", nullable = false)
-    private Long stockQuantity;
+    private Integer stockQuantity;
 
     public Product() {}
+
+    public Product(String productName, BigDecimal sellingPrice, BigDecimal priceAtPurchase, Integer stockQuantity) {
+        this.productName = productName;
+        this.sellingPrice = sellingPrice;
+        this.priceAtPurchase = priceAtPurchase;
+        this.stockQuantity = stockQuantity;
+    }
 
     public Long getId() {
         return Id;
@@ -47,27 +61,27 @@ public class Product implements Serializable {
         this.productName = productName;
     }
 
-    public Double getSellingPrice() {
+    public BigDecimal getSellingPrice() {
         return sellingPrice;
     }
 
-    public void setSellingPrice(Double sellingPrice) {
+    public void setSellingPrice(BigDecimal sellingPrice) {
         this.sellingPrice = sellingPrice;
     }
 
-    public Double getPriceAtPurchase() {
+    public BigDecimal getPriceAtPurchase() {
         return priceAtPurchase;
     }
 
-    public void setPriceAtPurchase(Double priceAtPurchase) {
+    public void setPriceAtPurchase(BigDecimal priceAtPurchase) {
         this.priceAtPurchase = priceAtPurchase;
     }
 
-    public Long getStockQuantity() {
+    public Integer getStockQuantity() {
         return stockQuantity;
     }
 
-    public void setStockQuantity(Long stockQuantity) {
+    public void setStockQuantity(Integer stockQuantity) {
         this.stockQuantity = stockQuantity;
     }
 

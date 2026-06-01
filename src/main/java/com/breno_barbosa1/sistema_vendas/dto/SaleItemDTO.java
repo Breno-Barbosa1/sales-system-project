@@ -1,7 +1,10 @@
 package com.breno_barbosa1.sistema_vendas.dto;
 
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class SaleItemDTO implements Serializable {
@@ -10,10 +13,12 @@ public class SaleItemDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long id;
+
+    @NotNull
     private Long quantity;
-    private Double price;
-    private Long sale_id;
-    private Long product_id;
+
+    @NotNull
+    private Long productId;
 
     public SaleItemDTO() {
     }
@@ -34,39 +39,23 @@ public class SaleItemDTO implements Serializable {
         this.quantity = quantity;
     }
 
-    public Double getPrice() {
-        return price;
+    public Long getProductId() {
+        return productId;
     }
 
-    public void setPrice(Double price) {
-        this.price = price;
-    }
-
-    public Long getSale_id() {
-        return sale_id;
-    }
-
-    public void setSale_id(Long sale_id) {
-        this.sale_id = sale_id;
-    }
-
-    public Long getProduct_id() {
-        return product_id;
-    }
-
-    public void setProduct_id(Long product_id) {
-        this.product_id = product_id;
+    public void setProductId(Long productId) {
+        this.productId = productId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
         SaleItemDTO that = (SaleItemDTO) o;
-        return Objects.equals(getId(), that.getId()) && Objects.equals(getQuantity(), that.getQuantity()) && Objects.equals(getPrice(), that.getPrice()) && Objects.equals(getSale_id(), that.getSale_id()) && Objects.equals(getProduct_id(), that.getProduct_id());
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getQuantity(), that.getQuantity()) && Objects.equals(getProductId(), that.getProductId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getQuantity(), getPrice(), getSale_id(), getProduct_id());
+        return Objects.hash(getId(), getQuantity(), getProductId());
     }
 }

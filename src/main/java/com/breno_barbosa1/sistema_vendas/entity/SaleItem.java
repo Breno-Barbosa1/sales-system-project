@@ -1,9 +1,11 @@
 package com.breno_barbosa1.sistema_vendas.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 @Entity
@@ -17,16 +19,20 @@ public class SaleItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(name = "quantity", nullable = false)
     private Long quantity;
 
+    @NotNull
     @Column(name = "price", nullable = false)
-    private Double price;
+    private BigDecimal price;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "sale_id")
     private Sale sale;
 
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
@@ -34,28 +40,12 @@ public class SaleItem implements Serializable {
     public SaleItem() {
     }
 
-    public Long getId() {
-        return id;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Long quantity) {
-        this.quantity = quantity;
-    }
-
-    public Double getPrice() {
-        return price;
-    }
-
-    public void setPrice(Double price) {
-        this.price = price;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
     public Sale getSale() {
@@ -66,12 +56,28 @@ public class SaleItem implements Serializable {
         this.sale = sale;
     }
 
-    public Product getProduct() {
-        return product;
+    public BigDecimal getPrice() {
+        return price;
     }
 
-    public void setProduct(Product product) {
-        this.product = product;
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public Long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     @Override

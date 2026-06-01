@@ -1,7 +1,11 @@
 package com.breno_barbosa1.sistema_vendas.dto;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Objects;
 
 public class ProductDTO implements Serializable {
@@ -10,12 +14,27 @@ public class ProductDTO implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private Long Id;
+
+    @NotBlank
     private String productName;
-    private Double sellingPrice;
-    private Double priceAtPurchase;
-    private Long stockQuantity;
+
+    @NotNull
+    private BigDecimal sellingPrice;
+
+    @NotNull
+    private BigDecimal priceAtPurchase;
+
+    @NotNull
+    private Integer stockQuantity;
 
     public ProductDTO() {}
+
+    public ProductDTO(String productName, BigDecimal sellingPrice, BigDecimal priceAtPurchase, Integer stockQuantity) {
+        this.productName = productName;
+        this.sellingPrice = sellingPrice;
+        this.priceAtPurchase = priceAtPurchase;
+        this.stockQuantity = stockQuantity;
+    }
 
     public Long getId() {
         return Id;
@@ -33,35 +52,35 @@ public class ProductDTO implements Serializable {
         this.productName = productName;
     }
 
-    public Double getSellingPrice() {
-        return sellingPrice;
-    }
-
-    public void setSellingPrice(Double sellingPrice) {
-        this.sellingPrice = sellingPrice;
-    }
-
-    public Double getPriceAtPurchase() {
+    public BigDecimal getPriceAtPurchase() {
         return priceAtPurchase;
     }
 
-    public void setPriceAtPurchase(Double priceAtPurchase) {
+    public void setPriceAtPurchase(BigDecimal priceAtPurchase) {
         this.priceAtPurchase = priceAtPurchase;
     }
 
-    public Long getStockQuantity() {
+    public BigDecimal getSellingPrice() {
+        return sellingPrice;
+    }
+
+    public void setSellingPrice(BigDecimal sellingPrice) {
+        this.sellingPrice = sellingPrice;
+    }
+
+    public Integer getStockQuantity() {
         return stockQuantity;
     }
 
-    public void setStockQuantity(Long stockQuantity) {
+    public void setStockQuantity(Integer stockQuantity) {
         this.stockQuantity = stockQuantity;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        ProductDTO product = (ProductDTO) o;
-        return Objects.equals(getId(), product.getId()) && Objects.equals(getProductName(), product.getProductName()) && Objects.equals(getSellingPrice(), product.getSellingPrice()) && Objects.equals(getPriceAtPurchase(), product.getPriceAtPurchase()) && Objects.equals(getStockQuantity(), product.getStockQuantity());
+        ProductDTO that = (ProductDTO) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getProductName(), that.getProductName()) && Objects.equals(getSellingPrice(), that.getSellingPrice()) && Objects.equals(getPriceAtPurchase(), that.getPriceAtPurchase()) && Objects.equals(getStockQuantity(), that.getStockQuantity());
     }
 
     @Override
