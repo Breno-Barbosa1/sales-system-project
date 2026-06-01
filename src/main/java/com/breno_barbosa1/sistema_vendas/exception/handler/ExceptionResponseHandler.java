@@ -39,8 +39,41 @@ public class ExceptionResponseHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
 
+    @ExceptionHandler(SaleNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleSaleNotFoundExceptions(SaleNotFoundException exception, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+                new Date(),
+                exception.getMessage(),
+                request.getDescription(false)
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(ProductNotFoundException.class)
+    public final ResponseEntity<ExceptionResponse> handleProductNotFoundExceptions(ProductNotFoundException exception, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+                new Date(),
+                exception.getMessage(),
+                request.getDescription(false)
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+    }
+
     @ExceptionHandler(EmployeeAlreadyExistsException.class)
     public final ResponseEntity<ExceptionResponse> handleEmployeeAlreadyExistsExceptions(EmployeeAlreadyExistsException exception, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+                new Date(),
+                exception.getMessage(),
+                request.getDescription(false)
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.CONFLICT);
+    }
+
+    @ExceptionHandler(ProductAlreadyRegisteredException.class)
+    public final ResponseEntity<ExceptionResponse> handleProductAlreadyRegisteredExceptions(ProductAlreadyRegisteredException exception, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse(
                 new Date(),
                 exception.getMessage(),

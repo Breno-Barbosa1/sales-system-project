@@ -1,9 +1,12 @@
 package com.breno_barbosa1.sistema_vendas.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.io.Serial;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
@@ -19,17 +22,21 @@ public class Sale implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotNull
     @Column(name = "created_at", nullable = false)
     private LocalDateTime createdAt;
 
+    @NotNull
     @Column(name = "total_amount", nullable = false)
-    private Double totalAmount;
+    private BigDecimal totalAmount;
 
+    @NotNull
     @ManyToOne
-    @JoinColumn(name = "funcionario_id")
+    @JoinColumn(name = "employee_id")
     private Employee employee;
 
-    @OneToMany(mappedBy = "sale", cascade = CascadeType.ALL)
+    @NotNull
+    @OneToMany(mappedBy = "sale", fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private List<SaleItem> saleItems;
 
     public Sale() {}
@@ -50,11 +57,11 @@ public class Sale implements Serializable {
         this.createdAt = createdAt;
     }
 
-    public Double getTotalAmount() {
+    public BigDecimal getTotalAmount() {
         return totalAmount;
     }
 
-    public void setTotalAmount(Double totalAmount) {
+    public void setTotalAmount(BigDecimal totalAmount) {
         this.totalAmount = totalAmount;
     }
 
