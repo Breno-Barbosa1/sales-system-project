@@ -58,7 +58,7 @@ public class EmployeeControllerTest {
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
     public void getEmployee_withNonExistingId_ReturnsNotFound() throws Exception {
-        when(employeeService.findById(1L)).thenThrow(EmployeeNotFoundException.class);
+        when(employeeService.findById(any())).thenThrow(EmployeeNotFoundException.class);
 
         mockMvc.perform(get("/api/employees/1"))
             .andExpect(status().isNotFound());
@@ -67,7 +67,7 @@ public class EmployeeControllerTest {
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
     public void getEmployee_withNonExistingCpf_ReturnsNotFound() throws Exception {
-        when(employeeService.findByCpf("99999999999")).thenThrow(EmployeeNotFoundException.class);
+        when(employeeService.findByCpf(any())).thenThrow(EmployeeNotFoundException.class);
 
         mockMvc.perform(get("/api/employees/cpf/99999999999"))
             .andExpect(status().isNotFound());
