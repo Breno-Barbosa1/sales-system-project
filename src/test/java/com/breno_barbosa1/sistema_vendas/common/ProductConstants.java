@@ -12,11 +12,11 @@ public class ProductConstants {
     }
 
     public static Product getValidUpdateProduct() {
-        return new Product("Dell Laptop", BigDecimal.valueOf(1000), BigDecimal.valueOf(700), 10);
+        return new Product("Dell Laptop", BigDecimal.valueOf(1200), BigDecimal.valueOf(700), 10);
     }
 
     public static ProductDTO getValidProductDTO() {
-        return new ProductDTO("Dell Laptop", BigDecimal.valueOf(1200), BigDecimal.valueOf(700), 10);
+        return new ProductDTO("Dell Laptop", BigDecimal.valueOf(1000), BigDecimal.valueOf(700), 10);
     }
 
     public static ProductDTO getValidUpdateProductDTO() {
