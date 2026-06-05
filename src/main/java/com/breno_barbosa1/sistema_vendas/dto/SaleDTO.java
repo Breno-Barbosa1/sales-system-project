@@ -26,6 +26,12 @@ public class SaleDTO implements Serializable {
 
     public SaleDTO() {}
 
+    public SaleDTO(List<SaleItemDTO> saleItems, Long employeeId, BigDecimal totalAmount) {
+        this.saleItems = saleItems;
+        this.employeeId = employeeId;
+        this.totalAmount = totalAmount;
+    }
+
     public Long getId() {
         return id;
     }

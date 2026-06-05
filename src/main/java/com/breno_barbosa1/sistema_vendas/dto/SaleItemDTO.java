@@ -15,12 +15,17 @@ public class SaleItemDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Long quantity;
+    private Integer quantity;
 
     @NotNull
     private Long productId;
 
     public SaleItemDTO() {
+    }
+
+    public SaleItemDTO(Long productId, Integer quantity) {
+        this.productId = productId;
+        this.quantity = quantity;
     }
 
     public Long getId() {
@@ -31,11 +36,11 @@ public class SaleItemDTO implements Serializable {
         this.id = id;
     }
 
-    public Long getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Long quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
