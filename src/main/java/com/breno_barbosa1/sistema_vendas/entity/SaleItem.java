@@ -21,7 +21,7 @@ public class SaleItem implements Serializable {
 
     @NotNull
     @Column(name = "quantity", nullable = false)
-    private Long quantity;
+    private Integer quantity;
 
     @NotNull
     @Column(name = "price", nullable = false)
@@ -38,6 +38,13 @@ public class SaleItem implements Serializable {
     private Product product;
 
     public SaleItem() {
+    }
+
+    public SaleItem(Product product, Sale sale, BigDecimal price, Integer quantity) {
+        this.product = product;
+        this.sale = sale;
+        this.price = price;
+        this.quantity = quantity;
     }
 
     public Product getProduct() {
@@ -64,11 +71,11 @@ public class SaleItem implements Serializable {
         this.price = price;
     }
 
-    public Long getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(Long quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 

@@ -22,6 +22,11 @@ public class CreateSaleDTO implements Serializable {
 
     public CreateSaleDTO() {}
 
+    public CreateSaleDTO(Long employeeId, List<SaleItemDTO> saleItemDTOS) {
+        this.employeeId = employeeId;
+        this.saleItemDTOS = saleItemDTOS;
+    }
+
     public Long getId() {
         return id;
     }

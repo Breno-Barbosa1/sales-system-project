@@ -41,6 +41,13 @@ public class Sale implements Serializable {
 
     public Sale() {}
 
+    public Sale(LocalDateTime createdAt, BigDecimal totalAmount, Employee employee, List<SaleItem> saleItems) {
+        this.createdAt = createdAt;
+        this.totalAmount = totalAmount;
+        this.employee = employee;
+        this.saleItems = saleItems;
+    }
+
     public Long getId() {
         return id;
     }
