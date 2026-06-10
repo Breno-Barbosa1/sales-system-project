@@ -28,6 +28,17 @@ public class ExceptionResponseHandler extends ResponseEntityExceptionHandler {
         return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
     }
 
+    @ExceptionHandler(ProductInsufficientStockQuantityException.class)
+    public final ResponseEntity<ExceptionResponse> handleProductInsufficientStockQuantityExceptions(ProductInsufficientStockQuantityException exception, WebRequest request) {
+        ExceptionResponse response = new ExceptionResponse(
+                new Date(),
+                exception.getMessage(),
+                request.getDescription(false)
+        );
+
+        return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(EmployeeNotFoundException.class)
     public final ResponseEntity<ExceptionResponse> handleEmployeeNotFoundExceptions(EmployeeNotFoundException exception, WebRequest request) {
         ExceptionResponse response = new ExceptionResponse(
