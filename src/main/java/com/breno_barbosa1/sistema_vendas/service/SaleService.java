@@ -6,19 +6,16 @@ import com.breno_barbosa1.sistema_vendas.entity.Employee;
 import com.breno_barbosa1.sistema_vendas.entity.Product;
 import com.breno_barbosa1.sistema_vendas.entity.Sale;
 import com.breno_barbosa1.sistema_vendas.entity.SaleItem;
-import com.breno_barbosa1.sistema_vendas.exception.EmployeeNotFoundException;
-import com.breno_barbosa1.sistema_vendas.exception.ProductNotFoundException;
-import com.breno_barbosa1.sistema_vendas.exception.RequiredObjectIsNullException;
-import com.breno_barbosa1.sistema_vendas.exception.SaleNotFoundException;
+import com.breno_barbosa1.sistema_vendas.exception.*;
 import com.breno_barbosa1.sistema_vendas.mapper.SaleMapper;
 import com.breno_barbosa1.sistema_vendas.repository.EmployeeRepository;
 import com.breno_barbosa1.sistema_vendas.repository.ProductRepository;
 import com.breno_barbosa1.sistema_vendas.repository.SaleRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -56,6 +53,7 @@ public class SaleService {
         return saleMapper.saleToSaleDTO(entity);
     }
 
+    @Transactional
     public SaleDTO create(CreateSaleDTO createSaleDTO) {
         if(createSaleDTO == null) throw new RequiredObjectIsNullException();
 
@@ -71,6 +69,11 @@ public class SaleService {
                     saleItem.setProduct(product);
                     saleItem.setPrice(product.getSellingPrice());
                     saleItem.setQuantity(saleItemDTO.getQuantity());
+
+                    if (product.getStockQuantity() < saleItem.getQuantity())
+                        throw new ProductInsufficientStockQuantityException("Insufficient stock quantity for product: " + product.getProductName());
+
+                    product.setStockQuantity(product.getStockQuantity() - saleItem.getQuantity());
 
                     return saleItem;
                 }
