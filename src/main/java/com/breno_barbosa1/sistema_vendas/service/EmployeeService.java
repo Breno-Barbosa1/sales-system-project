@@ -56,13 +56,6 @@ public class EmployeeService {
         return employeeMapper.employeeToEmployeeDTO(entity);
     }
 
-    public EmployeeDTO findByEmail(String email) {
-        var entity = employeeRepository.findByEmail(email)
-            .orElseThrow(() -> new EmployeeNotFoundException("No employee found with the following email: " + email));
-
-        return employeeMapper.employeeToEmployeeDTO(entity);
-    }
-
     public EmployeeDTO create(EmployeeDTO employeeDTO) {
         if (employeeDTO == null) throw new RequiredObjectIsNullException();
 

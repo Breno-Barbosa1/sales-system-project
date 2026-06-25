@@ -88,32 +88,6 @@ public class EmployeeServiceTest {
     }
 
     @Test
-    public void getEmployee_withExistingEmail_ReturnsEmployee() {
-        Employee employee = getValidEmployee();
-        EmployeeDTO employeeDTO = getValidEmployeeDTO();
-        String email = employee.getEmail();
-
-        when(employeeRepository.findByEmail(email)).thenReturn(Optional.of(employee));
-        when(employeeMapper.employeeToEmployeeDTO(employee)).thenReturn(employeeDTO);
-
-        EmployeeDTO sut = employeeService.findByEmail(email);
-
-        assertThat(sut)
-            .usingRecursiveComparison()
-            .isEqualTo(employeeDTO);
-
-        verify(employeeRepository).findByEmail(email);
-        verify(employeeMapper).employeeToEmployeeDTO(employee);
-    }
-
-    @Test
-    public void getEmployee_withNonExistingEmail_ThrowsException() {
-        when(employeeRepository.findByEmail(any())).thenReturn(Optional.empty());
-
-        assertThatThrownBy(() -> employeeService.findByEmail(any())).isInstanceOf(EmployeeNotFoundException.class);
-    }
-
-    @Test
     public void createEmployee_withValidData_ReturnsEmployee() {
         Employee employee = getValidEmployee();
         EmployeeDTO employeeDTO = getValidEmployeeDTO();

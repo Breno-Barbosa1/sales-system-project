@@ -2,20 +2,14 @@ package com.breno_barbosa1.sistema_vendas.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serial;
 import java.io.Serializable;
-import java.util.Collection;
-import java.util.List;
 import java.util.Objects;
 
 @Entity
 @Table(name = "employees")
-public class Employee implements Serializable, UserDetails {
+public class Employee implements Serializable {
 
     @Serial
     private static final long serialVersionUID = 1L;
@@ -48,21 +42,15 @@ public class Employee implements Serializable, UserDetails {
     @Column(name = "address", length = 100, nullable = false)
     private String address;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Column(name = "role", nullable = false)
-    private UserRole role;
-
     public Employee() {}
 
-    public Employee(String firstName, String lastName, String email, String password, String cpf, String address, UserRole role) {
+    public Employee(String firstName, String lastName, String email, String password, String cpf, String address) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
         this.cpf = cpf;
         this.address = address;
-        this.role = role;
     }
 
     public Long getId() {
@@ -97,6 +85,10 @@ public class Employee implements Serializable, UserDetails {
         this.email = email;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
     public void setPassword(String password) {
         this.password = password;
     }
@@ -117,62 +109,19 @@ public class Employee implements Serializable, UserDetails {
         this.address = address;
     }
 
-    public UserRole getRole() {
-        return role;
-    }
-
-    public void setRole(UserRole role) {
-        this.role = role;
-    }
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(this.role.name()));
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    @Override
-    public String getUsername() {
-        return this.email;
-    }
-
-    @Override
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    @Override
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    @Override
-    public boolean isEnabled() {
-        return true;
-    }
-
-
-    public String getFullName() {
+    public String getFullName(String firstName, String lastName) {
         return firstName + " " + lastName;
     }
 
     @Override
     public boolean equals(Object o) {
         if (o == null || getClass() != o.getClass()) return false;
-        Employee employee = (Employee) o;
-        return Objects.equals(getId(), employee.getId()) && Objects.equals(getFirstName(), employee.getFirstName()) && Objects.equals(getLastName(), employee.getLastName()) && Objects.equals(getEmail(), employee.getEmail()) && Objects.equals(getPassword(), employee.getPassword()) && Objects.equals(getCpf(), employee.getCpf()) && Objects.equals(getAddress(), employee.getAddress()) && getRole() == employee.getRole();
+        Employee that = (Employee) o;
+        return Objects.equals(getId(), that.getId()) && Objects.equals(getFirstName(), that.getFirstName()) && Objects.equals(getLastName(), that.getLastName()) && Objects.equals(getEmail(), that.getEmail()) && Objects.equals(getPassword(), that.getPassword()) && Objects.equals(getCpf(), that.getCpf()) && Objects.equals(getAddress(), that.getAddress());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getPassword(), getCpf(), getAddress(), getRole());
+        return Objects.hash(getId(), getFirstName(), getLastName(), getEmail(), getPassword(), getCpf(), getAddress());
     }
 }

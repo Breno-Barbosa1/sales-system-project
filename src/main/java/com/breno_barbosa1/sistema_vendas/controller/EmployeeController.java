@@ -48,15 +48,6 @@ public class EmployeeController {
         return ResponseEntity.status(HttpStatus.OK).body(dto);
     }
 
-    @GetMapping(value = "/email/{email}",
-        produces = MediaType.APPLICATION_JSON_VALUE
-    )
-    public ResponseEntity<EmployeeDTO> findByEmail(@PathVariable("email") String email) {
-        var dto = employeeService.findByEmail(email);
-
-        return ResponseEntity.status(HttpStatus.OK).body(dto);
-    }
-
     @PostMapping(
         produces = MediaType.APPLICATION_JSON_VALUE,
         consumes = MediaType.APPLICATION_JSON_VALUE

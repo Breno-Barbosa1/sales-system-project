@@ -64,27 +64,6 @@ public class EmployeeRepositoryTest {
     }
 
     @Test
-    public void getEmployee_withValidEmail_ReturnsEmployee() {
-        Employee savedEmployee = testEntityManager.persistFlushFind(getValidEmployee());
-
-        testEntityManager.clear();
-
-        Optional<Employee> sut = employeeRepository.findByEmail(savedEmployee.getEmail());
-
-        assertThat(sut).isPresent();
-        assertThat(sut.get())
-            .usingRecursiveComparison()
-            .isEqualTo(savedEmployee);
-    }
-
-    @Test
-    public void getEmployee_withNonExistingEmail_ReturnsEmpty() {
-        Optional<Employee> sut = employeeRepository.findByEmail("john@mail.com");
-
-        assertThat(sut).isEmpty();
-    }
-
-    @Test
     public void createEmployee_withValidData_ReturnsEmployee() {
         Employee employee = getValidEmployee();
 

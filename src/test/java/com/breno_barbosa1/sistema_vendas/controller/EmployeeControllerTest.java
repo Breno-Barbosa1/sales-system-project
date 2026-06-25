@@ -57,16 +57,6 @@ public class EmployeeControllerTest {
 
     @Test
     @WithMockUser(username = "admin", roles = "ADMIN")
-    public void getEmployee_withValidEmail_ReturnsOk() throws Exception {
-        when(employeeService.findByEmail("employee@mail.com")).thenReturn(getValidEmployeeDTO());
-
-        mockMvc.perform(get("/api/employees/email/employee@mail.com"))
-            .andExpect(status().isOk())
-            .andExpect(jsonPath("$").value(getValidEmployeeDTO()));
-    }
-
-    @Test
-    @WithMockUser(username = "admin", roles = "ADMIN")
     public void getEmployee_withNonExistingId_ReturnsNotFound() throws Exception {
         when(employeeService.findById(any())).thenThrow(EmployeeNotFoundException.class);
 
@@ -80,15 +70,6 @@ public class EmployeeControllerTest {
         when(employeeService.findByCpf(any())).thenThrow(EmployeeNotFoundException.class);
 
         mockMvc.perform(get("/api/employees/cpf/99999999999"))
-            .andExpect(status().isNotFound());
-    }
-
-    @Test
-    @WithMockUser(username = "admin", roles = "ADMIN")
-    public void getEmployee_withNonExistingEmail_ReturnsNotFound() throws Exception {
-        when(employeeService.findByEmail(any())).thenThrow(EmployeeNotFoundException.class);
-
-        mockMvc.perform(get("/api/employees/email/employee@mail.com"))
             .andExpect(status().isNotFound());
     }
 
